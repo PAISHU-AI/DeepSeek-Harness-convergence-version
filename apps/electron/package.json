@@ -1,0 +1,33 @@
+{
+  "name": "@deepseek-ai/dsh-desktop",
+  "description": "DeepSeek Harness native macOS desktop application",
+  "version": "0.1.0-rc.5",
+  "private": true,
+  "type": "module",
+  "main": "dist/main.mjs",
+  "scripts": {
+    "build": "tsdown --config tsdown.config.ts",
+    "dev": "electron .",
+    "stage-runtime": "node scripts/stage-runtime.mjs",
+    "dist": "electron-builder --mac dmg --arm64",
+    "verify-runtime": "node scripts/verify-packaged-runtime.mjs"
+  },
+  "build": {
+    "appId": "ai.deepseek.harness",
+    "productName": "DeepSeek Harness",
+    "icon": "assets/icon.icns",
+    "asar": true,
+    "files": ["dist/**", "package.json"],
+    "extraResources": [{ "from": "../../dist/desktop-runtime", "to": "harness" }],
+    "mac": {
+      "target": [{ "target": "dmg", "arch": ["arm64"] }],
+      "category": "public.app-category.developer-tools"
+    },
+    "dmg": { "title": "DeepSeek Harness" }
+  },
+  "devDependencies": {
+    "electron": "^38.0.0",
+    "electron-builder": "^26.0.12",
+    "tsdown": "^0.18.1"
+  }
+}
